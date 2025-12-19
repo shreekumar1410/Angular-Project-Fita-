@@ -1,0 +1,103 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>Create Account</h2>
+    <p class="subtitle">Register to get started</p>
+
+    <!-- Success Message -->
+    <div class="alert alert-success" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div class="alert alert-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name"
+          placeholder="Enter your full name"
+          [class.error]="isFieldInvalid('name')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('name')">
+          Name is required (minimum 3 characters)
+        </span>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          placeholder="Enter your email"
+          [class.error]="isFieldInvalid('email')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('email')">
+          Valid email is required
+        </span>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.error]="isFieldInvalid('password')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('password')">
+          Password is required (minimum 6 characters)
+        </span>
+      </div>
+
+      <!-- Role Field -->
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select id="role" formControlName="role">
+          <option value="customer">Customer</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <!-- Avatar Field -->
+      <div class="form-group">
+        <label for="avatar">Avatar URL</label>
+        <input 
+          type="url" 
+          id="avatar" 
+          formControlName="avatar"
+          placeholder="Enter avatar image URL"
+          [class.error]="isFieldInvalid('avatar')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('avatar')">
+          Avatar URL is required
+        </span>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn-primary"
+        [disabled]="isSubmitting"
+      >
+        {{ isSubmitting ? 'Registering...' : 'Register' }}
+      </button>
+
+      <!-- Login Link -->
+      <div class="footer-link">
+        Already have an account? <a routerLink="/login">Login here</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+

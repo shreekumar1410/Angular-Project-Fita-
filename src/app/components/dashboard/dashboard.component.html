@@ -1,0 +1,58 @@
+<div class="dashboard-container">
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading your profile...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Profile Display -->
+  <div class="dashboard-card" *ngIf="userProfile && !isLoading">
+    <div class="header">
+      <h2>Welcome to Your Dashboard</h2>
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+
+    <div class="profile-section">
+      <div class="avatar-container">
+        <img [src]="userProfile.avatar" [alt]="userProfile.name" class="avatar">
+      </div>
+
+      <div class="profile-info">
+        <div class="info-item">
+          <span class="label">Name:</span>
+          <span class="value">{{ userProfile.name }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Email:</span>
+          <span class="value">{{ userProfile.email }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Role:</span>
+          <span class="value role-badge" [class.admin]="userProfile.role === 'admin'">
+            {{ userProfile.role | uppercase }}
+          </span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">User ID:</span>
+          <span class="value">{{ userProfile.id }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-message">
+      <div class="success-icon">✓</div>
+      <p>You have successfully logged in!</p>
+      <p class="note">Product and other modules will be added later.</p>
+    </div>
+  </div>
+</div>
+
+
