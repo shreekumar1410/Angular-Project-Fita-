@@ -1,0 +1,117 @@
+<div class="add-product-container">
+  <div class="add-product-card">
+    <h2>Add New Product</h2>
+    <p class="subtitle">Fill in the details to add a new product</p>
+
+    <!-- Success Message -->
+    <div class="alert alert-success" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div class="alert alert-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <!-- Title Field -->
+      <div class="form-group">
+        <label for="title">Product Title</label>
+        <input 
+          type="text" 
+          id="title" 
+          formControlName="title"
+          placeholder="Enter product title"
+          [class.error]="isFieldInvalid('title')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('title')">
+          Title is required (minimum 3 characters)
+        </span>
+      </div>
+
+      <!-- Price Field -->
+      <div class="form-group">
+        <label for="price">Price ($)</label>
+        <input 
+          type="number" 
+          id="price" 
+          formControlName="price"
+          placeholder="Enter price"
+          [class.error]="isFieldInvalid('price')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('price')">
+          Price is required (must be 0 or greater)
+        </span>
+      </div>
+
+      <!-- Description Field -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description" 
+          formControlName="description"
+          placeholder="Enter product description"
+          rows="4"
+          [class.error]="isFieldInvalid('description')"
+        ></textarea>
+        <span class="error-text" *ngIf="isFieldInvalid('description')">
+          Description is required (minimum 10 characters)
+        </span>
+      </div>
+
+      <!-- Category Field -->
+      <div class="form-group">
+        <label for="categoryId">Category</label>
+        <select 
+          id="categoryId" 
+          formControlName="categoryId"
+          [class.error]="isFieldInvalid('categoryId')"
+        >
+          <option value="">Select a category</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <span class="error-text" *ngIf="isFieldInvalid('categoryId')">
+          Category is required
+        </span>
+      </div>
+
+      <!-- Image URL Field -->
+      <div class="form-group">
+        <label for="images">Image URL</label>
+        <input 
+          type="url" 
+          id="images" 
+          formControlName="images"
+          placeholder="Enter image URL"
+          [class.error]="isFieldInvalid('images')"
+        >
+        <span class="error-text" *ngIf="isFieldInvalid('images')">
+          Image URL is required
+        </span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn-cancel"
+          (click)="cancel()"
+          [disabled]="isSubmitting"
+        >
+          Cancel
+        </button>
+        <button 
+          type="submit" 
+          class="btn-submit"
+          [disabled]="isSubmitting"
+        >
+          {{ isSubmitting ? 'Adding...' : 'Add Product' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

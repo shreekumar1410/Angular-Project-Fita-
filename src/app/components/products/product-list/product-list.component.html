@@ -1,0 +1,116 @@
+<div class="product-list-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <h1>Products</h1>
+      <div class="header-actions">
+        <button class="btn-add" *ngIf="isAdminOrProvider()" (click)="addProduct()">
+          + Add Product
+        </button>
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="filter-container">
+    <div class="filter-section">
+      <!-- Search by Title -->
+      <div class="filter-group">
+        <label for="search">Search Products:</label>
+        <input 
+          type="text" 
+          id="search" 
+          [(ngModel)]="searchTitle"
+          (ngModelChange)="onSearchChange()"
+          placeholder="Search by product name..."
+          class="search-input"
+        >
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select id="category" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange()">
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Price Range Filter -->
+      <div class="filter-group">
+        <label for="minPrice">Min Price:</label>
+        <input 
+          type="number" 
+          id="minPrice" 
+          [(ngModel)]="minPrice"
+          placeholder="Min"
+          class="price-input"
+          min="0"
+        >
+      </div>
+
+      <div class="filter-group">
+        <label for="maxPrice">Max Price:</label>
+        <input 
+          type="number" 
+          id="maxPrice" 
+          [(ngModel)]="maxPrice"
+          placeholder="Max"
+          class="price-input"
+          min="0"
+        >
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="filter-actions">
+        <button class="btn-apply" (click)="applyFilters()">Apply Price Filter</button>
+        <button class="btn-clear" (click)="clearFilters()">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading products...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Products Grid -->
+  <div class="products-grid" *ngIf="!isLoading && !errorMessage">
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-image" (click)="viewProduct(product.id)">
+        <img [src]="product.images[0]" [alt]="product.title" 
+             onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
+      </div>
+      <div class="product-info">
+        <span class="category-badge">{{ product.category.name }}</span>
+        <h3 class="product-title" (click)="viewProduct(product.id)">{{ product.title }}</h3>
+        <p class="product-price">${{ product.price }}</p>
+        <p class="product-description">{{ product.description | slice:0:100 }}...</p>
+        
+        <button class="btn-view-details" (click)="viewProduct(product.id)">View Details</button>
+        
+        <!-- Admin/Provider Actions -->
+        <div class="product-actions" *ngIf="isAdminOrProvider()">
+          <button class="btn-edit" (click)="editProduct(product.id)">Edit</button>
+          <button class="btn-delete" (click)="deleteProduct(product)">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Products Message -->
+    <div class="no-products" *ngIf="products.length === 0">
+      <p>No products found.</p>
+    </div>
+  </div>
+</div>
+
+

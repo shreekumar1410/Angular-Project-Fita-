@@ -1,19 +1,19 @@
-.login-container {
+.add-product-container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  padding: 40px 20px;
 }
 
-.login-card {
+.add-product-card {
   background: white;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 450px;
+  max-width: 600px;
 }
 
 h2 {
@@ -36,6 +36,12 @@ h2 {
   font-size: 14px;
 }
 
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
 .alert-error {
   background-color: #f8d7da;
   color: #721c24;
@@ -54,7 +60,7 @@ label {
   font-size: 14px;
 }
 
-input {
+input, select, textarea {
   width: 100%;
   padding: 12px;
   border: 2px solid #e0e0e0;
@@ -62,15 +68,20 @@ input {
   font-size: 14px;
   transition: border-color 0.3s;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
-input:focus {
+input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: #667eea;
 }
 
-input.error {
+input.error, select.error, textarea.error {
   border-color: #dc3545;
+}
+
+textarea {
+  resize: vertical;
 }
 
 .error-text {
@@ -80,45 +91,55 @@ input.error {
   margin-top: 5px;
 }
 
-.btn-primary {
-  width: 100%;
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn-cancel, .btn-submit {
+  flex: 1;
   padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
   border: none;
   border-radius: 6px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s;
 }
 
-.btn-primary:hover:not(:disabled) {
+.btn-cancel {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-submit:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
-.btn-primary:disabled {
+.btn-cancel:disabled, .btn-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.footer-link {
-  text-align: center;
-  margin-top: 20px;
-  color: #666;
-  font-size: 14px;
-}
+@media (max-width: 600px) {
+  .add-product-card {
+    padding: 30px 20px;
+  }
 
-.footer-link a {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
+  .form-actions {
+    flex-direction: column;
+  }
 }
-
-.footer-link a:hover {
-  text-decoration: underline;
-}
-
 
 

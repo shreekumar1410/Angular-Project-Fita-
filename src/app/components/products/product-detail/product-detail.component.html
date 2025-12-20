@@ -1,0 +1,83 @@
+<div class="product-detail-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-content">
+      <button class="btn-back" (click)="backToList()">← Back to Products</button>
+      <h1>Product Details</h1>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage && !isLoading">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Product Detail -->
+  <div class="product-detail" *ngIf="product && !isLoading">
+    <div class="detail-card">
+      <!-- Product Images -->
+      <div class="product-images">
+        <div class="main-image">
+          <img 
+            [src]="product.images[currentImageIndex]" 
+            [alt]="product.title"
+            onerror="this.src='https://via.placeholder.com/600x600?text=No+Image'"
+          >
+          <button class="nav-btn prev" (click)="previousImage()" *ngIf="product.images.length > 1">‹</button>
+          <button class="nav-btn next" (click)="nextImage()" *ngIf="product.images.length > 1">›</button>
+        </div>
+        <div class="thumbnail-list" *ngIf="product.images.length > 1">
+          <img 
+            *ngFor="let image of product.images; let i = index"
+            [src]="image"
+            [alt]="product.title"
+            [class.active]="i === currentImageIndex"
+            (click)="currentImageIndex = i"
+            onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'"
+          >
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-details-info">
+        <span class="category-badge">{{ product.category.name }}</span>
+        <h2 class="product-title">{{ product.title }}</h2>
+        <p class="product-price">${{ product.price }}</p>
+        <p class="product-description">{{ product.description }}</p>
+
+        <!-- Admin Actions -->
+        <div class="admin-actions" *ngIf="isAdminOrProvider()">
+          <button class="btn-edit" (click)="editProduct()">Edit Product</button>
+          <button class="btn-delete" (click)="deleteProduct()">Delete Product</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products Section -->
+    <div class="related-section" *ngIf="relatedProducts.length > 0">
+      <h3>Related Products</h3>
+      <div class="related-products-grid">
+        <div class="related-product-card" *ngFor="let relatedProduct of relatedProducts" (click)="viewRelatedProduct(relatedProduct.id)">
+          <div class="related-product-image">
+            <img 
+              [src]="relatedProduct.images[0]" 
+              [alt]="relatedProduct.title"
+              onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'"
+            >
+          </div>
+          <div class="related-product-info">
+            <h4>{{ relatedProduct.title }}</h4>
+            <p class="related-price">${{ relatedProduct.price }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
