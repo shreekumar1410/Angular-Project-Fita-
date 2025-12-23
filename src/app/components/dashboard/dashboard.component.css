@@ -66,6 +66,12 @@
   font-weight: 600;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .btn-logout {
   padding: 10px 20px;
   background: rgba(255, 255, 255, 0.2);
@@ -195,6 +201,11 @@
     flex-direction: column;
     gap: 15px;
     text-align: center;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
   }
 
   .profile-section {
